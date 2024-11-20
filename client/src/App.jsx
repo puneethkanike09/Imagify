@@ -1,7 +1,7 @@
 
 const App = () => {
   return (
-    <div>
+    <div className="text-pink-700">
       Imagify
     </div>
   )
