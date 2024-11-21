@@ -1,10 +1,12 @@
-import { stepsData } from "../assets/assets"
+import { useNavigate } from "react-router-dom"
+import { assets, stepsData } from "../assets/assets"
 
 const Steps = () => {
+    const navigate = useNavigate()
     return (
         <div className="flex flex-col items-center justify-center my-24">
             <h1 className="text-3xl sm:text-4xl font-semibold mb-5 sm:mb-10">
-                How it works
+                How to use
             </h1>
             <div className="space-y-4 w-full max-w-3xl text-sm">
                 {
@@ -18,7 +20,10 @@ const Steps = () => {
                         </div>
                     ))
                 }
+
+
             </div>
+            <button onClick={() => navigate('/result')} className="sm:text-lg text-white bg-black w-auto mt-8 px-12 py-2.5 flex items-center gap-2 rounded-full"><img className="h-6" src={assets.star_group} alt="" />Get started </button>
         </div>
     )
 }
