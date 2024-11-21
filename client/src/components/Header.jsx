@@ -3,7 +3,7 @@ import { assets } from "../assets/assets"
 const Header = () => {
     return (
         <div className="flex flex-col justify-center items-center text-center my-20">
-            <div className="text-stone-500 inline-flex text-center gap-2 bg-transparent px-6 py-1 rounded-full border border-neutral-400">
+            <div className="text-stone-500 inline-flex text-center gap-2 bg-blue-200/30 px-6 py-1 rounded-full ">
                 <p>
                     Best text to image generator
                 </p>

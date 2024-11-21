@@ -2,8 +2,8 @@ import { stepsData } from "../assets/assets"
 
 const Steps = () => {
     return (
-        <div className="flex flex-col items-center justify-center my-32">
-            <h1 className="text-3xl sm:text-4xl font-semibold mb-2">
+        <div className="flex flex-col items-center justify-center my-24">
+            <h1 className="text-3xl sm:text-4xl font-semibold mb-5 sm:mb-10">
                 How it works
             </h1>
             <div className="space-y-4 w-full max-w-3xl text-sm">
