@@ -2,10 +2,56 @@ import { useContext, useEffect, useState } from "react";
 import { FaUser, FaEnvelope, FaLock, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [state, setState] = useState("Login");
-    const { showLogin, setShowLogin } = useContext(AppContext);
+    const { showLogin, setShowLogin, backendUrl, setToken, setUser } = useContext(AppContext);
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
+        try {
+
+            if (state === "Login") {
+                const { data } = await axios.post(backendUrl + '/api/user/login', {
+                    email,
+                    password
+                })
+
+                if (data.success) {
+                    setToken(data.token);
+                    setUser(data.user);
+                    localStorage.setItem("token", data.token);
+                    setShowLogin(false);
+                } else {
+                    toast.error(data.message);
+                }
+            } else {
+                const { data } = await axios.post(backendUrl + '/api/user/register', {
+                    name,
+                    email,
+                    password
+                })
+
+                if (data.success) {
+                    setToken(data.token);
+                    setUser(data.user);
+                    localStorage.setItem("token", data.token);
+                    setShowLogin(false);
+                } else {
+                    toast.error(data.message);
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
 
     // Prevent body scroll when the modal is open
     useEffect(() => {
@@ -39,6 +85,7 @@ const Login = () => {
                     className="absolute left-0 top-0 bottom-0 right-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center"
                 >
                     <motion.form
+                        onSubmit={onSubmitHandler}
                         variants={formVariants}
                         initial="hidden"
                         animate="visible"
@@ -52,6 +99,8 @@ const Login = () => {
                             <div className="border px-4 py-3 flex items-center gap-3 rounded-full">
                                 <FaUser className="text-slate-400 text-lg" />
                                 <input
+                                    onChange={(e) => setName(e.target.value)}
+                                    value={name}
                                     className="outline-none text-sm flex-1"
                                     type="text"
                                     placeholder="Full name"
@@ -62,6 +111,8 @@ const Login = () => {
                         <div className="border px-4 py-3 flex items-center gap-3 rounded-full mt-4">
                             <FaEnvelope className="text-slate-400 text-lg" />
                             <input
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
                                 className="outline-none text-sm flex-1"
                                 type="email"
                                 placeholder="Email"
@@ -71,6 +122,8 @@ const Login = () => {
                         <div className="border px-4 py-3 flex items-center gap-3 rounded-full mt-4">
                             <FaLock className="text-slate-400 text-lg" />
                             <input
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
                                 className="outline-none text-sm flex-1"
                                 type="password"
                                 placeholder="Password"
