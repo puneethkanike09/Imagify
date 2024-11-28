@@ -5,8 +5,11 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 const Header = () => {
-    const { user, setShowLogin } = useContext(AppContext)
+    const { user, setShowLogin, backendUrl } = useContext(AppContext)
     const navigate = useNavigate();
+
+
+    console.log(backendUrl + "/api/user/login")
 
     const onClickhandler = () => {
         if (user) {
