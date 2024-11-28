@@ -16,12 +16,11 @@ const Login = () => {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-
             if (state === "Login") {
-                const { data } = await axios.post(backendUrl + '/api/user/login', {
+                const { data } = await axios.post(backendUrl + "/api/user/login", {
                     email,
-                    password
-                })
+                    password,
+                });
 
                 if (data.success) {
                     setToken(data.token);
@@ -32,11 +31,11 @@ const Login = () => {
                     toast.error(data.message);
                 }
             } else {
-                const { data } = await axios.post(backendUrl + '/api/user/register', {
+                const { data } = await axios.post(backendUrl + "/api/user/register", {
                     name,
                     email,
-                    password
-                })
+                    password,
+                });
 
                 if (data.success) {
                     setToken(data.token);
@@ -47,11 +46,10 @@ const Login = () => {
                     toast.error(data.message);
                 }
             }
-
         } catch (error) {
             toast.error(error.message);
         }
-    }
+    };
 
     // Prevent body scroll when the modal is open
     useEffect(() => {
@@ -82,7 +80,7 @@ const Login = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute left-0 top-0 bottom-0 right-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center"
+                    className="fixed top-0 left-0 w-full h-full z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center"
                 >
                     <motion.form
                         onSubmit={onSubmitHandler}
