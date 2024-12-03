@@ -8,8 +8,13 @@ const BuyCredit = () => {
 
     // Animation Variants
     const cardVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+        hidden: { opacity: 0, y: 50, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.6, ease: "easeOut" }
+        },
     };
 
     const containerVariants = {
@@ -17,13 +22,18 @@ const BuyCredit = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.2, // Stagger appearance of child cards
+                staggerChildren: 0.2, // Stagger child cards for delayed appearance
+                delayChildren: 0.3,
             },
         },
     };
 
     const buttonHoverVariants = {
-        hover: { scale: 1.1 },
+        hover: {
+            scale: 1.1,
+            boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+            transition: { duration: 0.3 }
+        },
     };
 
     return (
@@ -35,16 +45,43 @@ const BuyCredit = () => {
         >
             {plans.map((item, index) => (
                 <motion.div
-                    className="bg-white/50 drop-shadow-sm border rounded-lg py-12 px-8 text-gray-600 hover:scale-105 transition-all duration-500"
+                    className="bg-white/50 drop-shadow-md border rounded-lg py-12 px-8 text-gray-600 hover:scale-[1.03] transition-all duration-500"
                     key={index}
                     variants={cardVariants}
+                    whileHover={{ scale: 1.05 }}
                 >
-                    <img width={40} src={assets.logo_icon} alt="" />
-                    <p className="mt-3 mb-1 font-semibold">{item.id}</p>
-                    <p className="text-sm">{item.desc}</p>
-                    <p className="mt-6">
+                    <motion.img
+                        width={40}
+                        src={assets.logo_icon}
+                        alt="Logo"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.7, ease: "backOut" }}
+                    />
+                    <motion.p
+                        className="mt-3 mb-1 font-semibold"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                    >
+                        {item.id}
+                    </motion.p>
+                    <motion.p
+                        className="text-sm"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                    >
+                        {item.desc}
+                    </motion.p>
+                    <motion.p
+                        className="mt-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                    >
                         <span className="text-3xl font-medium">₹{item.price}</span> / {item.credits} credits
-                    </p>
+                    </motion.p>
                     <motion.button
                         className="w-full text-white bg-black/80 mt-8 text-sm rounded-md py-2.5 min-w-52"
                         variants={buttonHoverVariants}
